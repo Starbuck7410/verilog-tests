@@ -1,11 +1,13 @@
-TESTBENCH := testbench/tb_top.v
-DESIGN_FILES := $(wildcard modules/*.v)
-INCLUDE := $(wildcard include/*.vh)
-SOURCES := $(TESTBENCH) $(DESIGN_FILES) $(INCLUDE)
-EXEC = simulation/waveform.vvp
+# Optional module name: make MODULE=foo
+MODULE ?= top
 
-# Set this to the file in "include/params.vh"
-VCD_FILE = simulation/waveform.vcd
+TESTBENCH = testbench/tb_$(MODULE).v
+DESIGN_FILES = $(wildcard modules/*.v)
+INCLUDE = $(wildcard include/*.vh)
+SOURCES = $(TESTBENCH) $(DESIGN_FILES) $(INCLUDE)
+
+EXEC := simulation/waveform.vvp
+VCD_FILE := simulation/waveform.vcd
 
 all: run
 
@@ -18,4 +20,4 @@ run: compile
 clean:
 	rm -f $(EXEC) $(VCD_FILE)
 
-.PHONY: clean
+.PHONY: all compile run clean
