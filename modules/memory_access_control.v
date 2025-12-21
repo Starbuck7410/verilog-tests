@@ -1,4 +1,4 @@
-module write_state_machine(
+module memory_access_control(
     input clk,
     input reset,
     input ack_n,
@@ -71,11 +71,11 @@ module write_state_machine(
                 prev_state = sm_state;
             end
 			
-			stop_n_reg = !(prev_state == WAIT_ACK) | (sm_state == NEXT); 
+			stop_n_reg = (!prev_state == WAIT_ACK) ; 
 		end
 		
 	end
 	
-	assign stop_n = stop_n_reg | !ack_n;
+	assign stop_n = stop_n_reg | !ack_n | (sm_state == NEXT) | (sm_state == WAIT_REQUEST);
 
 endmodule
