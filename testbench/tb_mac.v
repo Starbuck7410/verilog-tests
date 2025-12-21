@@ -1,7 +1,7 @@
 `include "include/params.vh"
 `timescale 1ns/1ps
 
-module tb_write_state_machine;
+module tb_mac; // memory access control
 
     // Inputs
     reg clk;
