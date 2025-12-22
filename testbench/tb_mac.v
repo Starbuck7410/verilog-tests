@@ -19,7 +19,7 @@ module tb_mac; // memory access control
     wire busy;
 
     // DUT
-    write_state_machine dut (
+    memory_access_control dut (
         .clk(clk),
         .reset(reset),
         .ack_n(ack_n),

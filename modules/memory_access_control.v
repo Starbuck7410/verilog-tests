@@ -29,7 +29,7 @@ module memory_access_control(
         busy = 0;
 	end
 
-	always @ (posedge clk) begin 
+	always @ (posedge clk or posedge reset) begin 
 		
 		if(reset) begin
 			sm_state = WAIT_REQUEST; // starting at the wait state
@@ -46,7 +46,7 @@ module memory_access_control(
                 prev_state <= WAIT_REQUEST;
 				sm_state <= WAIT_ACK;
 
-				wr_n <= mw & ~mr;
+				wr_n <= ~mw & mr;
                 as_n <= 0;
                 in_init <= 0;
                 busy <= 1;

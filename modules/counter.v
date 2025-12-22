@@ -10,10 +10,12 @@ module counter #(
         count = 0;
     end
 
+    
     always @(posedge clk) begin
         if(enable) begin
             count <= count + 1;
         end
     end
+    
 
 endmodule
