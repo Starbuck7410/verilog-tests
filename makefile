@@ -1,23 +1,33 @@
-# Optional module name: make MODULE=foo
+# Module name: make MODULE=foo
 MODULE ?= top
 
-TESTBENCH = testbench/tb_$(MODULE).v
+# Inputs
+TESTBENCH = testbench/tb_$(MODULE).v   # Format that connects module to testbench
 DESIGN_FILES = $(wildcard modules/*.v)
 INCLUDE = $(wildcard include/*.vh)
 SOURCES = $(TESTBENCH) $(DESIGN_FILES) $(INCLUDE)
 
-EXEC := simulation/waveform.vvp
-VCD_FILE := simulation/waveform.vcd
+# Outputs
+SIMUL_DIR := simulation
+EXEC := $(SIMUL_DIR)/$(MODULE).vvp
+VCD_FILE := $(SIMUL_DIR)/$(MODULE).vcd
 
 all: run
 
-compile: $(SOURCES)
-	iverilog -o $(EXEC) $(SOURCES)
+$(SIMUL_DIR):
+	mkdir -p $(SIMUL_DIR)
 
-run: compile
+compile: $(SOURCES) | $(SIMUL_DIR)
+	iverilog -o $(EXEC) $(SOURCES) -DDUMP_FILE_NAME=\"$(VCD_FILE)\"
+
+run: compile | $(SIMUL_DIR)
 	vvp $(EXEC)
 
 clean:
-	rm -f $(EXEC) $(VCD_FILE)
+	rm -f $(EXEC) $(SIMUL_DIR)
 
 .PHONY: all compile run clean
+
+
+
+

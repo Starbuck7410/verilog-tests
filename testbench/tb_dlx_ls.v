@@ -1,8 +1,12 @@
-`include "include/params.vh"
 `timescale 1ns / 1ps
 
 module tb_dlx_control;
-
+    `ifdef DUMP_FILE_NAME
+        initial begin
+            $dumpfile(`DUMP_FILE_NAME);
+            $dumpvars(0);
+        end
+    `endif
     reg clk;
     reg reset;
     reg step_en;

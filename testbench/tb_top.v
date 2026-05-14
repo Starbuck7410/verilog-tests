@@ -1,6 +1,12 @@
-`include "include/params.vh"
+
 
 module tb_top ();
+    `ifdef DUMP_FILE_NAME
+        initial begin
+            $dumpfile(`DUMP_FILE_NAME);
+            $dumpvars(0);
+        end
+    `endif
     reg clk;
     reg enable;
     reg reset;

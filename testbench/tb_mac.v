@@ -1,8 +1,13 @@
-`include "include/params.vh"
+
 `timescale 1ns/1ps
 
 module tb_mac; // memory access control
-
+    `ifdef DUMP_FILE_NAME
+        initial begin
+            $dumpfile(`DUMP_FILE_NAME);
+            $dumpvars(0);
+        end
+    `endif
     // Inputs
     reg clk;
     reg reset;
